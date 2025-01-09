@@ -36,7 +36,23 @@ namespace CodeCodeChallenge.Tests.Integration
         }
 
         //TASK1: endpoint /api/reportingstructure
-        //TODO: add the endpoint test then create the endpoint to pass
+        //bad id returns not found
+        [TestMethod]
+        public void GetBogusReportingStructureById_Returns_404NotFound()
+        {
+            // Arrange
+            var badEmployeeNumber = Guid.NewGuid().ToString();
+
+            // Execute
+            var getRequestTask = _httpClient.GetAsync($"api/reportingstructure/{badEmployeeNumber}");
+            var response = getRequestTask.Result;
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+        //TASK1: endpoint /api/reportingstructure
+        //add the endpoint test then create the endpoint to pass
         [TestMethod]
         public void GetReportingStructureById_Returns_Ok()
         {

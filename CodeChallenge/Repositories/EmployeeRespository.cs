@@ -33,7 +33,7 @@ namespace CodeChallenge.Repositories
             //return _employeeContext.Employees.SingleOrDefault(e => e.EmployeeId == id);
             var employee = _employeeContext.Employees
                 .Include(e => e.DirectReports)
-                .ThenInclude(e => e.DirectReports)
+                .ThenInclude(e => e.DirectReports)   //TODO does this go to all levels of employee direct reports and on down -- create a test?
                 .SingleOrDefault(e => e.EmployeeId == id);
             return employee;
         }

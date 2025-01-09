@@ -23,11 +23,26 @@ namespace CodeChallenge.Services
                 var employee = _employeeService.GetById(id);
                 if(employee == null) return null;
 
-                return new ReportingStructure() { employee = employee };
+                return new ReportingStructure() { employee = employee, numberOfReports = CalcNumberOfReports(employee) };
             }
 
             return null;
         }
 
+        private int CalcNumberOfReports(Employee employee)
+        {
+            var totalNumberOfReports = 0;
+            var directReports = employee.DirectReports;
+
+            if (directReports == null) return totalNumberOfReports;
+            
+            foreach (var directReport in directReports)
+            {
+                totalNumberOfReports++;
+                totalNumberOfReports += CalcNumberOfReports(directReport);
+            }
+
+            return totalNumberOfReports;
+        }
     }
 }

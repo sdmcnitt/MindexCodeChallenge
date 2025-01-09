@@ -1,5 +1,6 @@
 
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -102,6 +103,12 @@ namespace CodeCodeChallenge.Tests.Integration
             Assert.AreEqual(expectedFirstName, employee.FirstName);
             Assert.AreEqual(expectedLastName, employee.LastName);
             Assert.IsNotNull(employee.DirectReports);
+
+            // Check if Ringo has his level of direct reports returned
+            var ringo = employee.DirectReports.FirstOrDefault(e => e.FirstName == "Ringo");
+            Assert.IsNotNull(ringo);
+            Assert.IsNotNull(ringo.DirectReports);
+
         }
 
         [TestMethod]

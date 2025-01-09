@@ -29,6 +29,7 @@ namespace CodeChallenge.Services
             return null;
         }
 
+        //TODO this could be a prop of ReportingStructure
         private int CalcNumberOfReports(Employee employee)
         {
             var totalNumberOfReports = 0;

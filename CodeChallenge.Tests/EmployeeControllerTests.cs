@@ -1,4 +1,5 @@
 
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -32,6 +33,25 @@ namespace CodeCodeChallenge.Tests.Integration
         {
             _httpClient.Dispose();
             _testServer.Dispose();
+        }
+
+        //TODO: NOTE - with the EmployeeRepository.Add you can create what amounts to duplicate employees because there is no constraint for a natural key
+        //TODO adding a unique index on something like First + Last + Position?? we need a property that uniquely identifies an employee other than empid
+
+
+        //check that get of non-existing employee returns not found
+        [TestMethod]
+        public void GetBogusEmployee_Returns_404NotFound()
+        {
+            // Arrange
+            var employeeId = Guid.NewGuid().ToString();
+
+            // Execute
+            var getRequestTask = _httpClient.GetAsync($"api/employee/{employeeId}");
+            var response = getRequestTask.Result;
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
 
         [TestMethod]

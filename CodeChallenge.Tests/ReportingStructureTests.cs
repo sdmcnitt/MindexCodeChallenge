@@ -38,6 +38,28 @@ namespace CodeCodeChallenge.Tests.Integration
         //TASK1: endpoint /api/reportingstructure
         //employee with no direct reports returns 200 with NumberOfReports and zero numberOfReports
         [TestMethod]
+        public void GetReportingStructureById_EmpWithExpectedDirectReports_Returns_OK()
+        {
+            // Arrange
+            var employee = "16a596ae-edd3-4847-99fe-c4518e82c86f"; //john
+            var expectedFirstName = "John";
+
+            // Execute
+            var getRequestTask = _httpClient.GetAsync($"api/reportingstructure/{employee}");
+            var response = getRequestTask.Result;
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+
+            var reportingStructure = response.DeserializeContent<ReportingStructure>();
+            Assert.IsNotNull(reportingStructure);
+            Assert.AreEqual(expectedFirstName, reportingStructure.employee.FirstName);
+            Assert.AreEqual(4, reportingStructure.numberOfReports);
+        }
+
+        //TASK1: endpoint /api/reportingstructure
+        //employee with no direct reports returns 200 with NumberOfReports and zero numberOfReports
+        [TestMethod]
         public void GetReportingStructureById_EmpWithNoDirectReports_Returns_OK()
         {
             // Arrange

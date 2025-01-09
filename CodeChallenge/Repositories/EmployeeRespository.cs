@@ -33,6 +33,7 @@ namespace CodeChallenge.Repositories
             //return _employeeContext.Employees.SingleOrDefault(e => e.EmployeeId == id);
             var employee = _employeeContext.Employees
                 .Include(e => e.DirectReports)
+                .ThenInclude(e => e.DirectReports)
                 .SingleOrDefault(e => e.EmployeeId == id);
             return employee;
         }

@@ -105,8 +105,9 @@ namespace CodeCodeChallenge.Tests.Integration
             Assert.IsNotNull(employee.DirectReports);
 
             // Check if Ringo has his level of direct reports returned
+            //TODO this fails the test if all tests are rans as a group but not if test is ran on its own
             var ringo = employee.DirectReports.FirstOrDefault(e => e.FirstName == "Ringo");
-            Assert.IsNotNull(ringo);
+            Assert.IsNotNull(ringo, "Ringo should have been one of the direct reports of John");
             Assert.IsNotNull(ringo.DirectReports);
 
         }

@@ -54,7 +54,9 @@ namespace CodeCodeChallenge.Tests.Integration
             var reportingStructure = response.DeserializeContent<ReportingStructure>();
             Assert.IsNotNull(reportingStructure);
             Assert.AreEqual(expectedFirstName, reportingStructure.employee.FirstName);
-            Assert.AreEqual(4, reportingStructure.numberOfReports);
+
+            //TODO this fails the test if all tests are rans as a group but not if test is ran on its own
+            Assert.AreEqual(4, reportingStructure.numberOfReports, "The number of reports for John should be 4");
         }
 
         //TASK1: endpoint /api/reportingstructure

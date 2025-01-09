@@ -40,6 +40,12 @@ namespace CodeChallenge.Services
             return null;
         }
 
+        //TODO take a look at refactor of this if it is meant to be an UPDATE 
+        //--what happens if you pass in a null for new employee -- this would end up being a delete?
+        //--seems like we would just want to map the new values to the existing record for employe being updated by EmployeeId
+        //--seems like a hack to use the Add method in the repo which gens a new Guid then next step update to the original
+        //--finally check the SQL emitted as it is likely every field will be in the update even though not all fields were changed
+        //      -this can collide with concurrent user
         public Employee Replace(Employee originalEmployee, Employee newEmployee)
         {
             if(originalEmployee != null)

@@ -23,7 +23,7 @@ namespace CodeChallenge.Services
                 var employee = _employeeService.GetById(id);
                 if(employee == null) return null;
 
-
+                return new ReportingStructure() { employee = employee };
             }
 
             return null;

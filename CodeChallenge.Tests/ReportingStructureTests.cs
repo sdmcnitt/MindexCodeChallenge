@@ -36,6 +36,28 @@ namespace CodeCodeChallenge.Tests.Integration
         }
 
         //TASK1: endpoint /api/reportingstructure
+        //employee with no direct reports returns 200 with NumberOfReports and zero numberOfReports
+        [TestMethod]
+        public void GetReportingStructureById_EmpWithNoDirectReports_Returns_OK()
+        {
+            // Arrange
+            var employee = "c0c2293d-16bd-4603-8e08-638a9d18b22c"; //george
+            var expectedFirstName = "George";
+
+            // Execute
+            var getRequestTask = _httpClient.GetAsync($"api/reportingstructure/{employee}");
+            var response = getRequestTask.Result;
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+
+            var reportingStructure = response.DeserializeContent<ReportingStructure>();
+            Assert.IsNotNull(reportingStructure);
+            Assert.AreEqual(expectedFirstName, reportingStructure.employee.FirstName);
+            Assert.AreEqual(0, reportingStructure.numberOfReports);
+        }
+
+        //TASK1: endpoint /api/reportingstructure
         //bad id returns not found
         [TestMethod]
         public void GetBogusReportingStructureById_Returns_404NotFound()

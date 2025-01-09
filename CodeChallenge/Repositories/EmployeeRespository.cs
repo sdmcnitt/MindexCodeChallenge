@@ -29,7 +29,12 @@ namespace CodeChallenge.Repositories
 
         public Employee GetById(string id)
         {
-            return _employeeContext.Employees.SingleOrDefault(e => e.EmployeeId == id);
+            //#<ref ticket> fix bug for DirectReports returns null in all cases 
+            //return _employeeContext.Employees.SingleOrDefault(e => e.EmployeeId == id);
+            var employee = _employeeContext.Employees
+                .Include(e => e.DirectReports)
+                .SingleOrDefault(e => e.EmployeeId == id);
+            return employee;
         }
 
         public Task SaveAsync()

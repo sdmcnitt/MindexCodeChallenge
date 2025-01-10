@@ -38,6 +38,27 @@ namespace CodeCodeChallenge.Tests.Integration
         //TASK2: endpoint /api/compensation/id
         //add the endpoint test then create the endpoint to pass
         [TestMethod]
+        public void GetCompensationById_Check_Employee_Returns_Ok()
+        {
+            // Arrange
+            var employeeId = "16a596ae-edd3-4847-99fe-c4518e82c86f"; //john lennon
+            var expectedFirstName = "John";
+
+            // Execute
+            var getRequestTask = _httpClient.GetAsync($"api/compensation/{employeeId}");
+            var response = getRequestTask.Result;
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            var compensation = response.DeserializeContent<Compensation>();
+            Assert.IsNotNull(compensation);
+            Assert.IsNotNull(compensation.employee, "The employee should be returned or NotFound response");
+            Assert.AreEqual(expectedFirstName, compensation.employee.FirstName);
+        }
+
+        //TASK2: endpoint /api/compensation/id
+        //add the endpoint test then create the endpoint to pass
+        [TestMethod]
         public void GetCompensationById_Returns_Ok()
         {
             // Arrange

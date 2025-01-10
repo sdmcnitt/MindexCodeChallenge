@@ -36,7 +36,7 @@ namespace CodeCodeChallenge.Tests.Integration
         }
 
         //TASK2: endpoint /api/compensation/id
-        //add the endpoint test then create the endpoint to pass
+        //gets the expected employee
         [TestMethod]
         public void GetCompensationById_Check_Employee_Returns_Ok()
         {
@@ -54,6 +54,22 @@ namespace CodeCodeChallenge.Tests.Integration
             Assert.IsNotNull(compensation);
             Assert.IsNotNull(compensation.employee, "The employee should be returned or NotFound response");
             Assert.AreEqual(expectedFirstName, compensation.employee.FirstName);
+        }
+
+        //TASK2: endpoint /api/compensation/id
+        //add the endpoint test then create the endpoint to pass
+        [TestMethod]
+        public void GetBogusCompensationById_Returns_404NotFound()
+        {
+            // Arrange
+            var employeeId = Guid.NewGuid().ToString();
+
+            // Execute
+            var getRequestTask = _httpClient.GetAsync($"api/compensation/{employeeId}");
+            var response = getRequestTask.Result;
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
 
         //TASK2: endpoint /api/compensation/id

@@ -14,15 +14,14 @@ namespace CodeChallenge.Services
             _logger = logger;
             _compensationRepo = compensationRepo;
         }
-        public Compensation Create(Compensation compensation)
+        public Compensation Add(Compensation compensation)
         {
-            throw new System.NotImplementedException();
+            return _compensationRepo.Add(compensation);
         }
 
         public Compensation GetByEmployeeId(string id)
         {
-            var compensation = _compensationRepo.GetByEmployeeId(id);
-            return compensation;
+            return _compensationRepo.GetByEmployeeId(id);
         }
     }
 }

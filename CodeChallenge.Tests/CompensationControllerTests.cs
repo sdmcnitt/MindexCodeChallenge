@@ -35,8 +35,42 @@ namespace CodeCodeChallenge.Tests.Integration
             _testServer.Dispose();
         }
 
+        [TestMethod]
+        public void AddCompensation_ThenGetCompensation_Returns_CreatedAndOk()
+        {
+            // Arrange
+            var employeeId = "c0c2293d-16bd-4603-8e08-638a9d18b22c"; //george
+            var newCompensation = new AddCompensationRequest()
+            {
+                employeeId = employeeId,
+                salary = 5000000.00m,
+                effectiveDate = DateTime.UtcNow
+            };
+            var requestContent = new JsonSerialization().ToJson(newCompensation);
+
+            // Execute POST
+            var postRequestTask = _httpClient.PostAsync("api/compensation",
+               new StringContent(requestContent, Encoding.UTF8, "application/json"));
+            var postResponse = postRequestTask.Result;
+
+            // Assert POST
+            Assert.AreEqual(HttpStatusCode.Created, postResponse.StatusCode);
+
+            // Execute GET
+            var getRequestTask = _httpClient.GetAsync($"api/compensation/{employeeId}");
+            var getResponse = getRequestTask.Result;
+
+            // Assert GET
+            Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+            var compensation = getResponse.DeserializeContent<Compensation>();
+            Assert.IsNotNull(compensation);
+            Assert.AreEqual(newCompensation.employeeId, compensation.employee.EmployeeId);
+            Assert.AreEqual(newCompensation.salary, compensation.salary);
+            Assert.AreEqual(newCompensation.effectiveDate, compensation.effectiveDate);
+        }
+
         //TASK2: endpoint /api/compensation
-        //add the endpoint test then create the endpoint to pass
+        //test happy path add request
         [TestMethod]
         public void AddCompensation_Returns_Created()
         {

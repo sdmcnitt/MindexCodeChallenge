@@ -27,7 +27,7 @@ namespace CodeChallenge.Repositories
         public Compensation GetByEmployeeId(string id)
         {
             var compensation = _employeeContext.Compensations
-                .SingleOrDefault(c => c.employee.EmployeeId == id);
+                .SingleOrDefault(c => c.EmployeeId == id);
             return compensation;
         }
     }

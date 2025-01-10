@@ -22,11 +22,11 @@ namespace CodeChallenge.Data
             modelBuilder.Entity<Compensation>()
             .HasOne(e => e.employee)
             .WithOne()
-            .HasForeignKey<Compensation>("CompensationId")
+            .HasForeignKey<Compensation>("EmployeeId")
             .IsRequired();
 
             modelBuilder.Entity<Compensation>()
-                .HasKey("CompensationId");
+                .HasKey("EmployeeId");
         }
     }
 }

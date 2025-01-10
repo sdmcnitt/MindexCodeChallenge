@@ -4,6 +4,7 @@ namespace CodeChallenge.Models
 {
     public class Compensation
     {
+        public string EmployeeId { get; set; }
         public Employee employee { get; set; }
         public decimal salary { get; set; } = 0.00m;
         public DateTime effectiveDate { get; set; } = DateTime.UtcNow;

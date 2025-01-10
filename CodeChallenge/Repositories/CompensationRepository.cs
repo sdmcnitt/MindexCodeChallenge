@@ -20,7 +20,8 @@ namespace CodeChallenge.Repositories
 
         public Compensation Add(Compensation compensation)
         {
-            throw new NotImplementedException();
+            _employeeContext.Compensations.Add(compensation);
+            return compensation;
         }
 
         public Compensation GetByEmployeeId(string id)

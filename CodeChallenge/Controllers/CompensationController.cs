@@ -1,4 +1,5 @@
-﻿using CodeChallenge.Services;
+﻿using CodeChallenge.Models;
+using CodeChallenge.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -31,5 +32,15 @@ namespace CodeChallenge.Controllers
             return Ok(compensation);
         }
 
+        [HttpPost]
+        public IActionResult CreateCompensation([FromBody] AddCompensationRequest addCompensation)
+        {
+            _logger.LogDebug($"Received compensation create request for '{addCompensation.employeeId}'");
+
+            var compensation = _compensationService.Add(addCompensation);
+
+            //return CreatedAtRoute("CreateCompensation", new { id = addCompensation.employeeId }, compensation);
+            return CreatedAtAction(nameof(GetCompensation), new { id = addCompensation.employeeId }, compensation);
+        }
     }
 }

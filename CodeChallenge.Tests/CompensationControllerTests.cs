@@ -35,6 +35,30 @@ namespace CodeCodeChallenge.Tests.Integration
             _testServer.Dispose();
         }
 
+        //TASK2: endpoint /api/compensation
+        //add the endpoint test then create the endpoint to pass
+        [TestMethod]
+        public void AddCompensation_Returns_Created()
+        {
+            // Arrange
+            var employeeId = "16a596ae-edd3-4847-99fe-c4518e82c86f"; //john lennon
+            var newCompensation = new AddCompensationRequest()
+            {
+                employeeId = employeeId,
+                salary = 100000.00m,
+                effectiveDate = DateTime.UtcNow
+            };
+            var requestContent = new JsonSerialization().ToJson(newCompensation);
+
+            // Execute
+            var postRequestTask = _httpClient.PostAsync("api/compensation",
+               new StringContent(requestContent, Encoding.UTF8, "application/json"));
+            var response = postRequestTask.Result;
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+        }
+
         //TASK2: endpoint /api/compensation/id
         //gets the expected employee
         [TestMethod]

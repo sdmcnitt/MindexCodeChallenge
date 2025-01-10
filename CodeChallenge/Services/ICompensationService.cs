@@ -9,6 +9,6 @@ namespace CodeChallenge.Services
     public interface ICompensationService
     {
         Compensation GetByEmployeeId(String id);
-        Compensation Add(Compensation compensation);
+        Compensation Add(AddCompensationRequest addCompensation);
     }
 }
